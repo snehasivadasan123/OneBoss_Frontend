@@ -1,3 +1,5 @@
+
+
 export interface InvestmentSection {
   id: string;
   dealerAccountCode: string,
@@ -7,18 +9,20 @@ export interface InvestmentSection {
   balances: BalanceItem[];
 }
 export interface InvestmentItem {
+  // productName: string;
   subject: string;
   supplierAccount: string;
   units: number;
   price: number;
   marketValue: number;
-  bookValue: number;
+  bookValue: number | null;
 }
 export interface BalanceItem {
   type: string;
   value: number | null;
 }
 export interface PlanApiResponse {
+
   dealerAccountCode: string;
   oneBossId: string;
   description: string;
@@ -26,6 +30,7 @@ export interface PlanApiResponse {
 
 }
 export interface InvestmentDetailApiResponse {
+
   supplierAccount: string;
   oneBossId: string;
   currency: string;
@@ -36,5 +41,6 @@ export interface InvestmentDetailApiResponse {
   totalSharesUnissued: number;
   totalSharesIssued: number;
   productCode: string;
+  productName: string
   // links: any[];
 }

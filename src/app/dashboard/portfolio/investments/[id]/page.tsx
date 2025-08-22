@@ -1,24 +1,22 @@
 "use client";
-
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 import { InvestmentSection, InvestmentItem, InvestmentDetailApiResponse } from "@/types/common/investment";
 import { fetchPlanDetails } from "@/features/portfolio/services/planService";
 import { Spinner } from "@/components/shared/spinner";
 import { logger } from "@/lib/logger";
-
-
+import ErrorState from "@/component/error/ErrorState"
+import { ChevronLeft } from 'lucide-react';
+import { useRouter } from "next/navigation";
 
 export default function InvestmentDetailsPage() {
 
   const { id } = useParams();
   const [section, setSection] = useState<InvestmentSection | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,23 +24,30 @@ export default function InvestmentDetailsPage() {
         setLoading(true);
         setError(null);
         const data = await fetchPlanDetails(id as string);
+
+     
+        const items: InvestmentItem[] = data.map((apiItem: InvestmentDetailApiResponse) => {
+          const units = apiItem.totalSharesIssued + apiItem.totalSharesUnissued;
+          const marketValue = apiItem.currentPrice * units;
+          return {
+            subject: `${apiItem.productName} ${apiItem.productType}`,
+            supplierAccount: apiItem.supplierAccount,
+            units,
+            price: apiItem.currentPrice,
+            marketValue,
+            bookValue: null,
+          };
+        });
+
+        const totalValue = items.reduce((total, item) => total + item.marketValue, 0);
+
         const transformedSection: InvestmentSection = {
           id: id as string,
-          name: `Investment Plan ${id}`,
-          totalValue: data.reduce((total: number, item: { currentPrice: number; totalSharesIssued: number; }) => {
-            const marketValue = item.currentPrice * item.totalSharesIssued;
-            return total + marketValue;
-          }, 0),
-          items: data.map((apiItem: InvestmentDetailApiResponse): InvestmentItem => ({
-            subject: `${apiItem.productCode} ${apiItem.productType}`,
-            supplierAccount: apiItem.supplierAccount,
-            units: apiItem.totalSharesIssued,
-            price: apiItem.currentPrice,
-            marketValue: apiItem.currentPrice * apiItem.totalSharesIssued,
-            bookValue: apiItem.currentPrice * apiItem.totalSharesIssued,
-          })),
+          dealerAccountCode: id as string,
+          name: `Plan: ${id}`,
+          totalValue,
+          items,
           balances: [],
-          dealerAccountCode: ""
         };
 
         setSection(transformedSection);
@@ -59,6 +64,7 @@ export default function InvestmentDetailsPage() {
     }
   }, [id]);
 
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-40">
@@ -69,9 +75,10 @@ export default function InvestmentDetailsPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-40">
-        <p className="text-red-500">Error: {error}</p>
-      </div>
+      <ErrorState
+        title="Failed to Load Plan Details"
+        message={error || "Something went wrong while fetching investment details."}
+      />
     );
   }
 
@@ -82,10 +89,13 @@ export default function InvestmentDetailsPage() {
       </div>
     );
   }
-
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">{section.name}</h2>
+      <h2 className="text-xl font-bold mb-4 flex items-center">
+        <ChevronLeft className="mr-2 cursor-pointer hover:text-gray-600"
+          onClick={() => router.back()} />
+        {section.name}
+      </h2>
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -96,7 +106,6 @@ export default function InvestmentDetailsPage() {
               <TableHead className="text-right">Price</TableHead>
               <TableHead className="text-right">Market Value</TableHead>
               <TableHead className="text-right">Book Value</TableHead>
-              <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -116,33 +125,18 @@ export default function InvestmentDetailsPage() {
                     return <span className="text-muted-foreground">{item.subject}</span>;
                   })()}
                 </TableCell>
-                <TableCell className="text-xs text-primary-600">{item.supplierAccount}</TableCell>
-                <TableCell className="text-xs text-primary-600 text-right">
+                <TableCell className="body-14-medium text-primary-600">{item.supplierAccount}</TableCell>
+                <TableCell className="body-14-medium text-primary-600 text-right">
                   {item.units.toLocaleString()}
                 </TableCell>
-                <TableCell className="text-right text-xs text-primary-600">
+                <TableCell className="text-right body-14-medium text-primary-600">
                   ${item.price.toFixed(2)}
                 </TableCell>
-                <TableCell className="text-right text-xs text-primary-600">
+                <TableCell className="text-right body-14-medium text-primary-600">
                   ${item.marketValue.toFixed(2)}
                 </TableCell>
-                <TableCell className="text-right text-xs text-primary-600">
-                  ${item.bookValue.toFixed(2)}
-                </TableCell>
-                <TableCell className="text-center text-xs text-primary-600">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View details</DropdownMenuItem>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                <TableCell className="text-right body-14-medium text-primary-600">
+                  {item.bookValue !== null ? `$${item.bookValue.toFixed(2)}` : ""}
                 </TableCell>
               </TableRow>
             ))}

@@ -1,8 +1,9 @@
 import { logger } from "@/lib/logger";
-import axios from "axios";
+import { InvestmentDetailApiResponse, PlanApiResponse } from "@/types/common/investment";
+import axios, { AxiosResponse } from "axios";
 export async function fetchPlans(clientuuid: string) {
   try {
-    const response = await axios.get(`/api/proxy/plan`, {
+    const response: AxiosResponse<PlanApiResponse[]> = await axios.get(`/api/proxy/plan`, {
       params: { clientuuid },
       headers: {
         "x-type": "CLIENT_PORTAL",
@@ -19,7 +20,7 @@ export async function fetchPlans(clientuuid: string) {
 
 export async function fetchPlanDetails(plandealeraccountcode: string) {
   try {
-    const response = await axios.get(`/api/proxy/fundaccount`, {
+    const response: AxiosResponse<InvestmentDetailApiResponse[]> = await axios.get(`/api/proxy/fundaccount`, {
       params: { plandealeraccountcode },
       headers: {
         "x-type": "CLIENT_PORTAL",
@@ -27,6 +28,7 @@ export async function fetchPlanDetails(plandealeraccountcode: string) {
       }
     })
     logger.debug("Plan details response:", response.data);
+
     return response.data;
   } catch (error) {
     logger.error("Plan details API error:", error);

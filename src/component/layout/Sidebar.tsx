@@ -14,7 +14,6 @@ import {
   Handshake,
 
 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -55,7 +54,7 @@ export const items = [
     items: [
       {
         title: "Messages",
-        url: "/dashboard/e-statements",
+        url: "/dashboard/messages",
         icon: MessageCircle,
       },
       {
@@ -95,7 +94,6 @@ export const items = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-
 
 
   return (

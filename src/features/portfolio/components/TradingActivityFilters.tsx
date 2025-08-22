@@ -36,7 +36,6 @@ export default function TradingActivityFilters() {
 
   const handleSearch = () => {
     logger.debug("Searching with:", { plan, status, fromDate, toDate })
-
   }
 
   return (

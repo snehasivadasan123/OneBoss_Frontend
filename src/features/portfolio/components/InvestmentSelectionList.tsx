@@ -21,7 +21,6 @@ export default function InvestmentSectionList() {
       setLoading(false);
       return;
     }
-
     fetchPlans(clientuuid)
       .then((data) => {
         logger.debug("Fetched plans:", data);
@@ -29,6 +28,7 @@ export default function InvestmentSectionList() {
           id: plan.dealerAccountCode,
           name: plan.description,
           totalValue: plan.planMarketValue || 0,
+          dealerAccountCode: plan.dealerAccountCode,
           items: [],
           balances: [],
         }));

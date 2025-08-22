@@ -79,7 +79,7 @@ export default function Header() {
 
           <DropdownMenuContent align="end">
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push("/profile")}>
+            <DropdownMenuItem onClick={() => router.push("/dashboard/profile")}>
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleLogout}>

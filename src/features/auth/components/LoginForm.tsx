@@ -9,12 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Mail, LockKeyhole, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLogin } from "../hooks/useLogin"
-
 const formSchema = z.object({
   email: z.string().email({ message: "Enter a Valid Email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
 })
-
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const { login, loading, error } = useLogin()
@@ -30,12 +28,11 @@ const LoginForm = () => {
     logger.debug("Form submitted with values:", values)
     login(values.email, values.password)
   }
-
   return (
     <div className="w-full max-w-md mx-auto">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
-          {/* Email */}
+
           <FormField
             control={form.control}
             name="email"
@@ -55,8 +52,6 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
-          {/* Password */}
           <FormField
             control={form.control}
             name="password"
@@ -85,18 +80,12 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
-          {/* Error */}
-          {error && <p className="body-14-medium text-error-50 text-center">{error}</p>}
-
-          {/* Forgot password */}
+          {error && <p className="body-14-medium text-error-500 text-center">{error}</p>}
           <div className="flex justify-end">
             <a href="#" className="text-sm font-medium text-primary-1000 hover:underline">
               Forgot Password?
             </a>
           </div>
-
-          {/* Submit */}
           <Button
             type="submit"
             className="w-full bg-primary-1000 hover:bg-gray-800"
@@ -108,7 +97,7 @@ const LoginForm = () => {
           {/* Register */}
           <p className="text-center body-14-medium text-primary-500">
             Don’t have an account?{" "}
-            <a href="#" className="font-medium text-primary-1000 hover:underline">
+            <a href="/register" className="font-medium text-primary-1000 hover:underline">
               Register
             </a>
           </p>

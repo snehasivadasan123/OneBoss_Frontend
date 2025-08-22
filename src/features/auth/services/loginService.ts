@@ -22,7 +22,10 @@ export async function loginClient(payload: LoginPayload) {
     logger.debug(response.data)
     return response.data;
   } catch (error) {
-    logger.error("Login API error:", error);
+    logger.error("Login API error:", error)
+    if (axios.isAxiosError(error) && error.response?.data) {
+      return error.response.data
+    }
     throw error;
   }
 }
