@@ -27,6 +27,7 @@ export interface PlanApiResponse {
   oneBossId: string;
   description: string;
   planMarketValue?: number;
+  objectiveGrowth?: string
 
 }
 export interface InvestmentDetailApiResponse {

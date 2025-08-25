@@ -35,3 +35,20 @@ export async function fetchPlanDetails(plandealeraccountcode: string) {
     throw error
   }
 }
+export async function fetchPlanMarketValue(plandealeraccountcode?: string) {
+  console.log("Fetching market value for plan:", plandealeraccountcode);
+  try {
+    const response = await axios.get(`/api/proxy/planmarketvalue`, {
+      params: { plandealeraccountcode },
+      headers: {
+        "x-type": "CLIENT_PORTAL",
+        "Content-Type": "application/json",
+      }
+    });
+    logger.debug("Plan market value response:", response.data);
+    return response.data;
+  } catch (error) {
+    logger.error("Plan market value API error:", error);
+    throw error;
+  }
+}

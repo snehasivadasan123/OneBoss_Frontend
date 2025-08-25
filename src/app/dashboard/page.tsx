@@ -1,7 +1,9 @@
 import { ClientApprovals } from "@/features/dashboards/components/ClientApprovals";
 import TotalAssets from "@/features/dashboards/components/TotalAsset"
 import TotalInvestments from "@/features/dashboards/components/TotalInvestment";
-import InvestmentHistoryChart from "@/features/dashboards/components/InvestmentHistory";
+import InvestmentHistoryChart from "@/features/dashboards/components/InvestmentHistory"
+
+
 const DashboardPage = () => {
 
   return (

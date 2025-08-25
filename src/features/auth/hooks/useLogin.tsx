@@ -4,10 +4,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { loginClient } from "../services/loginService"
 import { logger } from "@/lib/logger"
+import { useAuth } from "@/context/AuthContext"
 export function useLogin() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const { login: authLogin } = useAuth()
   const login = async (email: string, password: string) => {
     setLoading(true)
     setError(null)
@@ -25,6 +27,7 @@ export function useLogin() {
         document.cookie = `access_token=${response.token}; path=/; Secure; SameSite=Strict; max-age=${60 * 60 * 24}`
         localStorage.setItem("access_token", response.token)
         localStorage.setItem("clientUuid", response.clientUuid)
+        authLogin(response.clientUuid, response.dealerAccountCode || "DEFAULT_DEALER")
         router.replace("/dashboard")
       } else {
         const msg = response.errorMessage || "Login failed. Please try again."

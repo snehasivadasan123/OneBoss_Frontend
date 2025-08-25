@@ -15,6 +15,7 @@ import {
 
 import { usePathname, useRouter } from "next/navigation";
 import { items } from "./Sidebar";
+import { useAuth } from "@/context/AuthContext";
 
 
 export default function Header() {
@@ -32,11 +33,13 @@ export default function Header() {
   };
   const pathTitleMap = getPathTitleMap();
   const pageTitle = pathTitleMap[pathname] || "";
-
+  const { logout: authLogout } = useAuth();
 
   const handleLogout = () => {
     localStorage.removeItem("access_token")
+    localStorage.removeItem("clientUuid")
     document.cookie = "access_token=;path=/; max-age=0; secure; samesite=strict"
+    authLogout()
     router.push("/login");
   };
 

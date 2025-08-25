@@ -2,73 +2,80 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, TooltipItem, Chart } from "chart.js"
 import { Pie } from "react-chartjs-2"
-// import ChartDataLabels from "chartjs-plugin-datalabels"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect, useState } from "react"
+import { fetchPlans } from "@/features/portfolio/services/planService"
+import { PlanApiResponse } from "@/types/common/investment"
+import { useAuth } from "@/context/AuthContext"
+import { Spinner } from "@/components/shared/spinner"
+import { logger } from "@/lib/logger"
 
-// Register Chart.js components and plugins
-ChartJS.register(ArcElement, Tooltip, Legend,)
+ChartJS.register(ArcElement, Tooltip, Legend)
 
-// Data for the pie chart
-const chartData = {
-  labels: ["25645 (TFSA Client Name, Individual)", "36569 (Account Type)", "25486 (Account Type)"],
-  datasets: [
-    {
-      data: [14220, 8521, 3501],
-      backgroundColor: ["#6366F1", "#22C55E", "#F59E0B"],
-      borderColor: "white",
-      borderWidth: 2,
-      borderRadius: 8,
-      spacing: 2,
-    },
-  ],
-}
+export default function TotalInvestmentsChart() {
+  const { user } = useAuth()
+  const [plans, setPlans] = useState<PlanApiResponse[]>([])
+  const [loading, setLoading] = useState(true);
+  const clientuuid = user?.clientUuid || ""
+  useEffect(() => {
 
-// Options for the pie chart
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      enabled: true,
-      callbacks: {
+    setLoading(true)
+    fetchPlans(clientuuid)
+      .then((data) => setPlans(data))
+      .catch((err) => logger.error("Error fetching plans:", err))
+      .finally(() => setLoading(false))
+  }, [clientuuid])
 
-        label: (context: TooltipItem<"pie">) => {
-          let label = context.label || ""
-          if (label) {
-            label += ": "
-          }
-          if (context.parsed !== null) {
-            label += new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(context.parsed)
-          }
-          return label
+  const chartData = {
+    labels: plans.map((p) => p.description || "No Description"),
+    datasets: [
+      {
+        data: plans.map((p) => p.objectiveGrowth || 0), // TODO: replace with real market value
+        backgroundColor: ["#6366F1", "#22C55E", "#F59E0B", "#EF4444", "#3B82F6", "#F97316"],
+        borderColor: "white",
+        borderWidth: 2,
+        borderRadius: 8,
+        spacing: 2,
+      },
+    ],
+  }
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context: TooltipItem<"pie">) => {
+            let label = context.label || ""
+            if (label) label += ": "
+            if (context.parsed !== null) {
+              label += new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(context.parsed)
+            }
+            return label
+          },
         },
       },
     },
-    datalabels: {
-      color: "#fff",
-      font: {
-        weight: "bold",
-        size: 14,
-      },
+  }
 
-      formatter: (value: number, context: { chart: Chart<"pie"> }) => {
-        const total = context.chart.data.datasets[0].data.reduce((sum: number, val: number) => sum + val, 0)
-        const percentage = ((value / total) * 100).toFixed(0) + "%"
-        return percentage
-      },
-    },
-  },
-}
-
-export default function TotalInvestmentsChart() {
-  const legendData = [
-    { name: "25645 (TFSA Client Name, Individual)", value: 14220, color: "#6366F1" },
-    { name: "36569 (Account Type)", value: 8521, color: "#22C55E" },
-    { name: "25486 (Account Type)", value: 3501, color: "#F59E0B" },
-  ]
+  const legendData = plans.map((p, i) => ({
+    name: p.description || "No Description",
+    value: p.objectiveGrowth || 0, // TODO: replace with market value
+    color: chartData.datasets[0].backgroundColor[i % chartData.datasets[0].backgroundColor.length],
+  }))
+  if (!user || loading) {
+    return (
+      <div className="flex items-center justify-center h-40">
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <Card className="h-full flex flex-col">
