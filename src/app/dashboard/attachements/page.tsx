@@ -1,10 +1,10 @@
 
+import Attachment from "@/features/attachements/components/AttachenetPage"
 
-import Attachement from "@/features/attachements/components/Attachements"
 const AttachementPage = () => {
   return (
     <div>
-      <Attachement />
+      <Attachment />
     </div>
   )
 }

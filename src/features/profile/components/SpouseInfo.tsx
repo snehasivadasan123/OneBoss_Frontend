@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Landmark, Building2, Mails, Contact } from "lucide-react"
+import { User, Landmark, Building2 } from "lucide-react"
 import { fetchUserDetails } from "../services/profileService"
 import { ProfileApiResponse } from "@/types/common/Profile"
 import { logger } from "@/lib/logger"
@@ -38,7 +38,7 @@ export function SpouseInfo() {
       } catch (error) {
         logger.error("Error fetching user details:", error)
       } finally {
-        setLoading(false) 
+        setLoading(false)
       }
     }
     fetchData()
