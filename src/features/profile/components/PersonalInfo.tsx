@@ -9,6 +9,7 @@ import { ProfileApiResponse } from "@/types/common/Profile"
 import { logger } from "@/lib/logger"
 import SpouseInfo from "./SpouseInfo"
 import { Spinner } from "@/components/shared/spinner"
+
 function DisplayField({ label, value }: { label: string; value?: string | number | null }) {
   return (
     <div className="grid grid-cols-2 py-2 border-b last:border-0">
@@ -17,8 +18,6 @@ function DisplayField({ label, value }: { label: string; value?: string | number
     </div>
   )
 }
-
-
 export function PersonalInfo() {
   const [activeTab, setActiveTab] = useState("personal")
   const [loading, setLoading] = useState(true)
@@ -31,7 +30,6 @@ export function PersonalInfo() {
         const clientUuid = localStorage.getItem("clientUuid") || ""
         if (clientUuid) {
           const data = await fetchUserDetails(clientUuid)
-          console.log("User data:", data)
           setUser(data)
         }
       } catch (error) {

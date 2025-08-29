@@ -23,8 +23,6 @@ export function SpouseInfo() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<ProfileApiResponse | null>(null)
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +30,6 @@ export function SpouseInfo() {
         const clientUuid = localStorage.getItem("clientUuid") || ""
         if (clientUuid) {
           const data = await fetchUserDetails(clientUuid)
-          console.log("User data:", data)
           setUser(data)
         }
       } catch (error) {
@@ -69,13 +66,13 @@ export function SpouseInfo() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <DisplayField label="Title" value={user?.spouse.title} />
-                  <DisplayField label="Name" value={user?.spouse.name} />
-                  <DisplayField label="SurName" value={user?.spouse.surname} />
-                  <DisplayField label="Gender" value={user?.spouse.gender} />
+                  <DisplayField label="Title" value={user?.spouse?.title} />
+                  <DisplayField label="Name" value={user?.spouse?.name} />
+                  <DisplayField label="SurName" value={user?.spouse?.surname} />
+                  <DisplayField label="Gender" value={user?.spouse?.gender} />
                   <DisplayField label="Date of Birth" value="" />
-                  <DisplayField label="Occupation" value={user?.spouse.occupation} />
-                  <DisplayField label="Employer" value={user?.spouse.employer} />
+                  <DisplayField label="Occupation" value={user?.spouse?.occupation} />
+                  <DisplayField label="Employer" value={user?.spouse?.employer} />
                 </CardContent>
               </Card>
 

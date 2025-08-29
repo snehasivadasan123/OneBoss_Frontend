@@ -1,6 +1,7 @@
 import { logger } from "@/lib/logger";
 import { ProfileApiResponse } from "@/types/common/Profile";
 import axios, { AxiosResponse } from "axios";
+import axiosInstance from "@/lib/axios";
 export async function fetchUserDetails(clientuuid: string) {
   try {
 

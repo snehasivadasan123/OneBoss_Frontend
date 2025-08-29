@@ -30,6 +30,14 @@ const LoginForm = () => {
   }
   return (
     <div className="w-full max-w-md mx-auto">
+      <div className="text-center mb-6">
+        <h2 className="subheading-20-semibold  ">
+          Login
+        </h2>
+        <p className="text-xs sm:text-sm md:text-base text-primary-500 mt-1">
+          Enter your email and password to continue.
+        </p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onsubmit)} className="space-y-6">
 
@@ -82,7 +90,7 @@ const LoginForm = () => {
           />
           {error && <p className="body-14-medium text-error-500 text-center">{error}</p>}
           <div className="flex justify-end">
-            <a href="#" className="text-sm font-medium text-primary-1000 hover:underline">
+            <a href="/forgotpassword" className="text-sm font-medium text-primary-1000 hover:underline">
               Forgot Password?
             </a>
           </div>

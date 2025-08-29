@@ -55,7 +55,6 @@ export function UploadDocumentsModal({ open, onOpenChange }: UploadDocumentsModa
     const files = e.dataTransfer.files
     if (files && files[0]) {
       setValue("files", files)
-      console.log("Files dropped:", files)
     }
   }
 
@@ -63,12 +62,10 @@ export function UploadDocumentsModal({ open, onOpenChange }: UploadDocumentsModa
     const files = e.target.files
     if (files && files[0]) {
       setValue("files", files)
-      console.log("Files selected:", files)
     }
   }
 
   const onSubmit = (data: FormData) => {
-    console.log("Form submitted:", data)
     onOpenChange(false)
     reset()
   }

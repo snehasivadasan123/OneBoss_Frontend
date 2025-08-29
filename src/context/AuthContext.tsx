@@ -25,9 +25,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
       return { ...state, user: null, isAuthenticated: false, isLoading: false, error: null };
     default:
       return state;
-
   }
-
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const user = JSON.parse(savedUser);
+      const user = JSON.parse(savedUser)
       dispatch({ type: 'SET_USER', payload: user });
     } else {
       dispatch({ type: 'SET_LOADING', payload: false });

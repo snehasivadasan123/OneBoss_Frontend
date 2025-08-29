@@ -18,8 +18,12 @@ export default function TotalInvestmentsChart() {
   const [loading, setLoading] = useState(true);
   const clientuuid = user?.clientUuid || ""
   useEffect(() => {
-
+    if (!clientuuid) {
+      setLoading(false)
+      return
+    }
     setLoading(true)
+
     fetchPlans(clientuuid)
       .then((data) => setPlans(data))
       .catch((err) => logger.error("Error fetching plans:", err))

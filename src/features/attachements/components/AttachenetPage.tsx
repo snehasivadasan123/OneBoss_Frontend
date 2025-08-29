@@ -11,6 +11,7 @@ import { useAuth } from "@/context/AuthContext"
 import { se } from "date-fns/locale"
 import { set } from "zod"
 import { UploadDocumentsModal } from "./UploadDocument"
+import { logger } from "@/lib/logger"
 
 export default function Attachment() {
   const [includeInactive, setIncludeInactive] = useState(false)
@@ -20,22 +21,28 @@ export default function Attachment() {
   const [documents, setDocuments] = useState<AttachmentApiResponse[]>([])
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
-  const clientuuid = user?.clientUuid || ""
   const [modalOpen, setModalOpen] = useState(false)
+  const clientuuid = user?.clientUuid || ""
+
   useEffect(() => {
     async function loadDocs() {
       try {
+        if (!clientuuid) {
+          setLoading(false)
+          return
+        }
         setLoading(true)
         const res = await fetchAttachements(clientuuid)
         setDocuments(res)
       } catch (err) {
-        console.error("Failed to fetch documents", err)
+        logger.error("Failed to fetch documents", err)
       } finally {
         setLoading(false)
       }
     }
+
     loadDocs()
-  }, [])
+  }, [clientuuid])
 
   return (
     <div className="p-6 bg-primary-50 min-h-screen">
@@ -50,32 +57,32 @@ export default function Attachment() {
       <div className="flex flex-wrap gap-2 mb-6">
         <div className="flex items-center space-x-2">
           <Checkbox id="include-inactive" checked={includeInactive}
-            onCheckedChange={(checked) => setIncludeInactive(checked === true)} />
-          <label htmlFor="include-inactive" className="body-14-regular">
+            onCheckedChange={(checked) => setIncludeInactive(checked === true)} className="boder border-primary-1000" />
+          <label htmlFor="include-inactive" className="body-14-medium">
             Include inactive Attachments
           </label>
         </div>
 
         <div className="flex items-center space-x-2">
           <Checkbox id="exclude-plans" checked={excludeFromPlans}
-            onCheckedChange={(checked) => setExcludeFromPlans(checked === true)} />
-          <label htmlFor="exclude-plans" className="body-14-regular">
+            onCheckedChange={(checked) => setExcludeFromPlans(checked === true)} className="boder border-primary-1000" />
+          <label htmlFor="exclude-plans" className="body-14-medium">
             Exclude Attachments from plans, funds, OCs, transactions, and trust transactions
           </label>
         </div>
 
         <div className="flex items-center space-x-2">
           <Checkbox id="tree-view" checked={treeView}
-            onCheckedChange={(checked) => setTreeView(checked === true)} />
-          <label htmlFor="tree-view" className="body-14-regular">
+            onCheckedChange={(checked) => setTreeView(checked === true)} className="boder border-primary-1000" />
+          <label htmlFor="tree-view" className="body-14-medium">
             Tree View
           </label>
         </div>
 
         <div className="flex items-center space-x-2">
           <Checkbox id="show-pinned" checked={showPinned}
-            onCheckedChange={(checked) => setShowPinned(checked === true)} />
-          <label htmlFor="show-pinned" className="body-14-regular">
+            onCheckedChange={(checked) => setShowPinned(checked === true)} className="boder border-primary-1000" />
+          <label htmlFor="show-pinned" className="body-14-medium">
             Show Pinned Documents
           </label>
         </div>
@@ -86,10 +93,10 @@ export default function Attachment() {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50">
-              <TableHead className="body-14-medium text-primary-1000">Date Submitted</TableHead>
-              <TableHead className="body-14-medium text-primary-1000">Description</TableHead>
-              <TableHead className="body-14-medium text-primary-1000">Document Type</TableHead>
-              <TableHead className="body-14-medium text-primary-1000">Action</TableHead>
+              <TableHead className="subheading-16-semibold text-primary-1000">Date Submitted</TableHead>
+              <TableHead className="subheading-16-semibold text-primary-1000">Description</TableHead>
+              <TableHead className="subheading-16-semibold text-primary-1000">Document Type</TableHead>
+              <TableHead className="subheading-16-semibold text-primary-1000">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

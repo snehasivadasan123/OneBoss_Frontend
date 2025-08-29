@@ -260,12 +260,7 @@ body {
     font-weight: var(--font-weight-medium);
   }
 
-  .body-16-regular {
-    /* font-family: var(--font-sans); */
-    font-size: var(--font-size-body-16);
-    line-height: var(--line-height-body-16);
-    font-weight: var(--font-weight-regular);
-  }
+
 
   .body-14-medium {
     /* font-family: var(--font-sans); */
@@ -276,8 +271,8 @@ body {
 
   .body-14-regular {
     /* font-family: var(--font-sans); */
-    font-size: var(--font-size-body-14);
-    line-height: var(--line-height-body-14);
+    font-size: var(--font-size-body-16);
+    line-height: var(--line-height-body-16);
     font-weight: var(--font-weight-regular);
   }
 

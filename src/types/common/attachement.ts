@@ -22,7 +22,7 @@ export interface AttachmentApiResponse {
   documentType: DocumentType
   clientUuid: string
   data: string | null
-  description: string  // this is “Notes” entered by user??
+  description: string  // this is “Notes” entered by user
   status: string
   createdDate: string
   oneBossId: number

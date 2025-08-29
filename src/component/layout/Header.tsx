@@ -16,7 +16,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { items } from "./Sidebar";
 import { useAuth } from "@/context/AuthContext";
-
+import user from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -41,7 +41,14 @@ export default function Header() {
     document.cookie = "access_token=;path=/; max-age=0; secure; samesite=strict"
     authLogout()
     router.push("/login");
-  };
+  }
+  const menuItems = [
+    { label: "My Profile", icon: user, action: () => router.push("/dashboard/profile") },
+    { label: "Support", action: () => router.push("/dashboard/helper") },
+    { label: "Reset Password", action: () => router.push("/forgotpassword") },
+    { label: "Logout", action: handleLogout },
+  ];
+
 
   return (
     <header className="flex items-center justify-between p-5 bg-white border-b border-gray-200 w-full">
@@ -82,12 +89,11 @@ export default function Header() {
 
           <DropdownMenuContent align="end">
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => router.push("/dashboard/profile")}>
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>
-              Logout
-            </DropdownMenuItem>
+            {menuItems.map((item, index) => (
+              <DropdownMenuItem key={index} onClick={item.action}>
+                {item.label}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
