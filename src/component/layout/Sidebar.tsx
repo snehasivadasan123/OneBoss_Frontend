@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
   House,
   ChartPie,
@@ -12,8 +12,7 @@ import {
   MessageCircle,
   HandHelping,
   Handshake,
-
-} from "lucide-react";
+} from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -24,8 +23,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar";
-import Image from 'next/image'
+} from "@/components/ui/sidebar"
+import Image from "next/image"
 export const items = [
   {
     title: "OVERVIEW",
@@ -69,7 +68,7 @@ export const items = [
       },
       {
         title: "Statements",
-        url: "/dashboard/statements",
+        url: "/dashboard/statement",
         icon: FileText,
       },
     ],
@@ -90,11 +89,10 @@ export const items = [
       },
     ],
   },
-];
+]
 
 export function AppSidebar() {
   const pathname = usePathname()
-
 
   return (
     <Sidebar className="">
@@ -105,7 +103,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
 
-      <SidebarContent >
+      <SidebarContent>
         {items.map((section) => (
           <SidebarGroup key={section.title}>
             <SidebarGroupLabel className="text-xs font-medium uppercase text-primary-600 dark:text-primary-1000">
@@ -113,9 +111,9 @@ export function AppSidebar() {
             </SidebarGroupLabel>
 
             <SidebarGroupContent>
-              <SidebarMenu >
+              <SidebarMenu>
                 {section.items.map((item) => {
-                  const isActive = pathname === item.url;
+                  const isActive = pathname === item.url
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
@@ -131,16 +129,13 @@ export function AppSidebar() {
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
-                  );
+                  )
                 })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
-
-
       </SidebarContent>
-
-    </Sidebar >
-  );
+    </Sidebar>
+  )
 }

@@ -100,7 +100,7 @@
   --color-primary-300: #C8C8C8;
   --color-primary-400: #A8A8A8;
   --color-primary-500: #848484;
-  --color-primary-600: #606668;
+  --color-primary-600: #6C727E;
   --color-primary-700: #4D4D4D;
   --color-primary-800: #3B3B3B;
   --color-primary-900: #11160A;
@@ -112,12 +112,12 @@
   /* Error Colors - From Figma */
   --color-error-50: #FCF3F3;
   --color-error-100: #FEF4A4;
-  --color-error-200: #FCBCBC;
+  --color-error-200: #FFE4E4;
   --color-error-300: #F22E2E;
   --color-error-400: #E14646;
   --color-error-500: #FF4F4F;
   --color-error-600: #EB5146;
-  --color-error-700: #B73F3F;
+  --color-error-700: #DF2225;
   --color-error-800: #91191A;
   --color-error-900: #66A04A;
 
@@ -272,7 +272,7 @@ body {
   .body-14-regular {
     /* font-family: var(--font-sans); */
     font-size: var(--font-size-body-16);
-    line-height: var(--line-height-body-16);
+    line-height: var(--line-height-body-14);
     font-weight: var(--font-weight-regular);
   }
 

@@ -12,7 +12,7 @@ function DisplayField({ label, value }: { label: string; value?: string | number
   return (
     <div className="grid grid-cols-2 py-2 border-b last:border-0">
       <div className="text-sm font-medium text-muted-foreground">{label}</div>
-      <div className="text-sm text-foreground">{value !== null && value !== undefined ? value : "-"}</div>
+      <div className="subheading-14-semibold ">{value !== null && value !== undefined ? value : "-"}</div>
     </div>
   )
 }

@@ -61,13 +61,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     logout,
     clearError,
   };
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-
 }
-
-
-
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {

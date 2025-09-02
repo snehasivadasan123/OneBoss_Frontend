@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Bell, ChevronDown, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Bell, ChevronDown, Search, User, BadgeQuestionMark, LockKeyholeOpen, LogOut } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,52 +11,50 @@ import {
   DropdownMenuSeparator,
   // DropdownMenuLabel,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
-import { usePathname, useRouter } from "next/navigation";
-import { items } from "./Sidebar";
-import { useAuth } from "@/context/AuthContext";
-import user from "lucide-react";
+import { usePathname, useRouter } from "next/navigation"
+import { items } from "./Sidebar"
+import { useAuth } from "@/context/AuthContext"
 
 export default function Header() {
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname()
+  const router = useRouter()
 
   const getPathTitleMap = () => {
-    const map: Record<string, string> = {};
+    const map: Record<string, string> = {}
     items.forEach((section) => {
       section.items.forEach((item) => {
-        map[item.url] = item.title;
-      });
-    });
-    return map;
-  };
-  const pathTitleMap = getPathTitleMap();
-  const pageTitle = pathTitleMap[pathname] || "";
-  const { logout: authLogout } = useAuth();
+        map[item.url] = item.title
+      })
+    })
+    return map
+  }
+  const pathTitleMap = getPathTitleMap()
+  const pageTitle = pathTitleMap[pathname] || ""
+  const { logout: authLogout } = useAuth()
 
   const handleLogout = () => {
     localStorage.removeItem("access_token")
     localStorage.removeItem("clientUuid")
     document.cookie = "access_token=;path=/; max-age=0; secure; samesite=strict"
     authLogout()
-    router.push("/login");
+    router.push("/login")
   }
   const menuItems = [
-    { label: "My Profile", icon: user, action: () => router.push("/dashboard/profile") },
-    { label: "Support", action: () => router.push("/dashboard/helper") },
-    { label: "Reset Password", action: () => router.push("/forgotpassword") },
-    { label: "Logout", action: handleLogout },
-  ];
-
+    { label: "My Profile", icon: User, action: () => router.push("/dashboard/profile") },
+    { label: "Support", icon: BadgeQuestionMark, action: () => router.push("/dashboard/helper") },
+    { label: "Reset Password", icon: LockKeyholeOpen, action: () => router.push("/forgotpassword") },
+    { label: "Logout", icon: LogOut, action: handleLogout },
+  ]
 
   return (
-    <header className="flex items-center justify-between p-5 bg-white border-b border-gray-200 w-full">
-
+    <header className="flex items-center justify-between p-5 bg-white border-b border-gray-200 min-w-full">
       <div className="flex items-center">
+        <SidebarTrigger aria-label="Toggle sidebar" className="mr-2 md:hidden" />
         <h2 className="text-2xl font-bold">{pageTitle}</h2>
       </div>
-
 
       <div className="relative flex-1 max-w-md mx-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -91,6 +89,7 @@ export default function Header() {
             <DropdownMenuSeparator />
             {menuItems.map((item, index) => (
               <DropdownMenuItem key={index} onClick={item.action}>
+                {item.icon && <item.icon className="mr-2 h-4 w-4" />}
                 {item.label}
               </DropdownMenuItem>
             ))}
@@ -98,5 +97,5 @@ export default function Header() {
         </DropdownMenu>
       </div>
     </header>
-  );
+  )
 }

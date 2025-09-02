@@ -1,5 +1,5 @@
 
-import Attachment from "@/features/attachements/components/AttachenetPage"
+import Attachment from "@/features/attachements/components/AttachementPage"
 
 const AttachementPage = () => {
   return (
