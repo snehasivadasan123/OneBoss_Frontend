@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { PencilLine } from "lucide-react"
-import { useTranslations } from 'next-intl'
 const approvalData = [
   {
     id: 1,
@@ -36,7 +34,7 @@ export function ClientApprovals() {
 
   return (
     <div className="p-2">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-4 mt-1">
         <h2 className="subheading-20-semibold text-primary-1000">
           Client Approvals & eSigning
         </h2>
@@ -47,9 +45,7 @@ export function ClientApprovals() {
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-2 px-2 w-12">
-                <Checkbox />
-              </th>
+
               <th className="text-left py-2 px-3 subheading-14-semibold text-primary-1000">
                 Date Created
               </th>
@@ -76,23 +72,21 @@ export function ClientApprovals() {
                 key={item.id}
                 className="border-b border-gray-100 hover:bg-gray-50"
               >
-                <td className="py-2 px-2">
-                  <Checkbox />
-                </td>
-                <td className="py-2 px-3 text-sm text-primary-1200">
+
+                <td className="py-2 px-3 body-14-medium text-primary-600">
                   {item.dateCreated}
                 </td>
-                <td className="py-2 px-3 text-sm text-primary-1200">
+                <td className="py-2 px-3 body-14-medium text-primary-600">
                   {item.time}
                 </td>
-                <td className="py-2 px-3 text-sm text-primary-1200">
+                <td className="py-2 px-3  body-14-medium text-primary-600">
                   {item.description}
                 </td>
                 <td className="py-2 px-3 text-sm text-info-700">{item.status}</td>
                 <td className="py-2 px-3 text-sm text-info-700">{item.type}</td>
                 <td className="py-2 px-3">
-                  <Button className="bg-transparent hover:bg-transparent text-primary-1000 border border-primary-220 px-3 py-1">
-                    <PencilLine className="h-4 w-4" />
+                  <Button className="bg-transparent hover:bg-transparent text-primary-1000 border border-primary-220 px-2 py-1">
+                    <PencilLine className="h-2 w-2" />
                   </Button>
                 </td>
               </tr>
@@ -108,12 +102,11 @@ export function ClientApprovals() {
             className="border border-gray-200 rounded-lg p-3 shadow-sm bg-white"
           >
             <div className="flex justify-between items-center">
-              <Checkbox />
               <Button className="bg-transparent hover:bg-transparent text-primary-1000 border border-primary-220 px-3 py-1">
                 <PencilLine className="h-4 w-4" />
               </Button>
             </div>
-            <div className="mt-2 text-sm text-primary-1200">
+            <div className="mt-2 text-sm text-primary-600">
               <p><strong>Date Created:</strong> {item.dateCreated}</p>
               <p><strong>Time:</strong> {item.time}</p>
               {item.description && <p><strong>Description:</strong> {item.description}</p>}

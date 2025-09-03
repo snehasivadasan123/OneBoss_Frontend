@@ -63,7 +63,7 @@ export const items = [
       },
       {
         title: "Trade Confirmations",
-        url: "/dashboard/trade",
+        url: "/dashboard/tradeConfirmation",
         icon: Handshake,
       },
       {

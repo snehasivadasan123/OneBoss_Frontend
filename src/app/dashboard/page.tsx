@@ -7,26 +7,17 @@ import InvestmentHistoryChart from "@/features/dashboards/components/InvestmentH
 const DashboardPage = () => {
 
   return (
-    <div className="min-h-screen bg-primary-50 p-6 md:p-8">
-      <div className="mb-6 rounded-lg bg-primary-50 shadow-sm">
+    <div >
+      <div className="mb-1 rounded-lg bg-primary-50 shadow-sm">
         <ClientApprovals />
       </div>
-
-      <div className="rounded-lg bg-primary-50 shadow-sm p-6">
-        <TotalAssets />
-
-        <main className="grid  gap-4 lg:grid-cols-2 ">
-          <TotalInvestments />
-          <InvestmentHistoryChart />
-        </main>
-
-      </div>
-
-
+      <TotalAssets />
+      <main className="grid  gap-4 lg:grid-cols-2 ">
+        <TotalInvestments />
+        <InvestmentHistoryChart />
+      </main>
     </div>
   )
-
-
 }
 
 export default DashboardPage

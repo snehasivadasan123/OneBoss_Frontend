@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { Eye, Trash2 } from "lucide-react"
 import { fetchAttachements } from "../services/attachementsService"
 import { AttachmentApiResponse } from "@/types/common/attachement";
@@ -14,10 +14,7 @@ import { UploadDocumentsModal } from "./UploadDocument"
 import { logger } from "@/lib/logger"
 
 export default function Attachment() {
-  const [includeInactive, setIncludeInactive] = useState(false)
-  const [excludeFromPlans, setExcludeFromPlans] = useState(false)
-  const [treeView, setTreeView] = useState(false)
-  const [showPinned, setShowPinned] = useState(false)
+
   const [documents, setDocuments] = useState<AttachmentApiResponse[]>([])
   const [loading, setLoading] = useState(true)
   const { user } = useAuth()
@@ -54,39 +51,6 @@ export default function Attachment() {
       </div>
 
 
-      <div className="flex flex-wrap gap-2 mb-6">
-        <div className="flex items-center space-x-2">
-          <Checkbox id="include-inactive" checked={includeInactive}
-            onCheckedChange={(checked) => setIncludeInactive(checked === true)} className="boder border-primary-1000" />
-          <label htmlFor="include-inactive" className="body-14-medium">
-            Include inactive Attachments
-          </label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox id="exclude-plans" checked={excludeFromPlans}
-            onCheckedChange={(checked) => setExcludeFromPlans(checked === true)} className="boder border-primary-1000" />
-          <label htmlFor="exclude-plans" className="body-14-medium">
-            Exclude Attachments from plans, funds, OCs, transactions, and trust transactions
-          </label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox id="tree-view" checked={treeView}
-            onCheckedChange={(checked) => setTreeView(checked === true)} className="boder border-primary-1000" />
-          <label htmlFor="tree-view" className="body-14-medium">
-            Tree View
-          </label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox id="show-pinned" checked={showPinned}
-            onCheckedChange={(checked) => setShowPinned(checked === true)} className="boder border-primary-1000" />
-          <label htmlFor="show-pinned" className="body-14-medium">
-            Show Pinned Documents
-          </label>
-        </div>
-      </div>
 
 
       <div className="border border-gray-200">

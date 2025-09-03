@@ -21,7 +21,7 @@ const data = {
     {
       label: "Investment",
       data: [230000, 50000, 120000, 260000, 170000, 100000, 210000, 280000],
-      backgroundColor: "#3B82F6",
+      backgroundColor: "#00A4E8",
       borderRadius: 8,
       barPercentage: 0.4,
       categoryPercentage: 0.8,
@@ -76,13 +76,13 @@ const options: ChartOptions<"bar"> = {
 
 export default function InvestmentHistoryChart() {
   return (
-    <Card className="flex flex-col min-h-[250px] sm:min-h-[350px] md:min-h-[450px] max-h-[600px]">
+    <Card className="flex flex-col ">
       <CardHeader>
-        <CardTitle className="text-base sm:text-lg md:text-xl">
+        <CardTitle className="subheading-16-semibold sm:text-lg md:text-xl">
           Investment History
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="h-[220px] sm:h-[240px] md:h-[260px]">
         <div className="relative w-full h-full">
           <Bar data={data} options={options} />
         </div>

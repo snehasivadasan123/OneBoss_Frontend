@@ -38,8 +38,8 @@ export default function TotalInvestmentsChart() {
         backgroundColor: ["#6366F1", "#22C55E", "#F59E0B", "#EF4444", "#3B82F6", "#F97316"],
         borderColor: "white",
         borderWidth: 2,
-        borderRadius: 8,
-        spacing: 2,
+        borderRadius: 7,
+        spacing: 1,
       },
     ],
   }
@@ -82,20 +82,21 @@ export default function TotalInvestmentsChart() {
   }
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className=" flex flex-col">
       <CardHeader>
-        <CardTitle>Total Investments</CardTitle>
+        <CardTitle className="subheading-18-semibold">My Investments</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center gap-4 p-4">
-        <div className="aspect-square h-[250px] w-[250px]">
+      <CardContent className="grid grid-cols-1 gap-4 p-4  md:items-center">
+
+        <div className="aspect-square h-[160px] w-[160px] md:h-[200px] md:w-[200px] mx-auto">
           <Pie data={chartData} options={chartOptions} />
         </div>
         <div className="grid w-full gap-2 text-sm">
           {legendData.map((entry, index) => (
             <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center ">
                 <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: entry.color }} />
-                <span>{entry.name}</span>
+                <span className="subheading-14-semibold md:text-base">{entry.name}</span>
               </div>
               <span className="font-medium">${entry.value.toLocaleString()}</span>
             </div>
