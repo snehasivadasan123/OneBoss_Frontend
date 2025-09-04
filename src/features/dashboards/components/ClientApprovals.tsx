@@ -1,5 +1,8 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { PencilLine } from "lucide-react"
+import { useRouter } from "next/navigation"
+import ApprovalTable from "./Approval"
 const approvalData = [
   {
     id: 1,
@@ -8,7 +11,7 @@ const approvalData = [
     description: "",
     status: "sentToClient",
     statusColor: "text-blue-600",
-    type: "kycClientPorta",
+    type: "KYC - Client Portal Approval",
   },
   {
     id: 2,
@@ -17,7 +20,7 @@ const approvalData = [
     description: "",
     status: "sentToClient",
     statusColor: "text-blue-600",
-    type: "mutualFundTrading",
+    type: "Mutual Fund Trading - Client Portal Approval",
   },
   {
     id: 3,
@@ -26,11 +29,15 @@ const approvalData = [
     description: "",
     status: "clientCompleted",
     statusColor: "text-blue-600",
-    type: "nfcDocuSign",
+    type: "NFC - DocuSign Envelope",
   },
 ]
 
 export function ClientApprovals() {
+  const router = useRouter()
+  const handleTypeClick = () => {
+    router.push("/dashboard/approval")
+  }
 
   return (
     <div className="p-2">
@@ -44,8 +51,7 @@ export function ClientApprovals() {
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="border-b border-gray-200">
-
+            <tr className="border border-gray-200">
               <th className="text-left py-2 px-3 subheading-14-semibold text-primary-1000">
                 Date Created
               </th>
@@ -68,22 +74,28 @@ export function ClientApprovals() {
           </thead>
           <tbody>
             {approvalData.map((item) => (
-              <tr
-                key={item.id}
-                className="border-b border-gray-100 hover:bg-gray-50"
-              >
-
+              <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
                 <td className="py-2 px-3 body-14-medium text-primary-600">
                   {item.dateCreated}
                 </td>
                 <td className="py-2 px-3 body-14-medium text-primary-600">
                   {item.time}
                 </td>
-                <td className="py-2 px-3  body-14-medium text-primary-600">
+                <td className="py-2 px-3 body-14-medium text-primary-600">
                   {item.description}
                 </td>
-                <td className="py-2 px-3 text-sm text-info-700">{item.status}</td>
-                <td className="py-2 px-3 text-sm text-info-700">{item.type}</td>
+                <td className="py-2 px-3 text-sm text-info-700">
+                  {item.status}
+                </td>
+                <td className="py-2 px-3">
+                  <Button
+                    variant="ghost"
+                    onClick={handleTypeClick}
+                    className="text-info-700 hover:text-info-800 hover:bg-info-50 p-1 h-auto font-normal text-sm"
+                  >
+                    {item.type}
+                  </Button>
+                </td>
                 <td className="py-2 px-3">
                   <Button className="bg-transparent hover:bg-transparent text-primary-1000 border border-primary-220 px-2 py-1">
                     <PencilLine className="h-2 w-2" />
@@ -92,6 +104,7 @@ export function ClientApprovals() {
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
 

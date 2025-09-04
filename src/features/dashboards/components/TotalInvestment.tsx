@@ -1,6 +1,6 @@
 "use client"
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, TooltipItem, Chart } from "chart.js"
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, TooltipItem, } from "chart.js"
 import { Pie } from "react-chartjs-2"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useEffect, useState } from "react"

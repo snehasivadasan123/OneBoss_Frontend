@@ -141,7 +141,7 @@
   --color-success-400: #6AC22E;
   --color-success-500: #44CF6C;
   --color-success-600: #50F64;
-  --color-success-700: #4CB396;
+  --color-success-700: #63A402;
   --color-success-800: #6DC21;
   --color-success-900: #1D8135;
 
@@ -271,7 +271,7 @@ body {
 
   .body-14-regular {
     /* font-family: var(--font-sans); */
-    font-size: var(--font-size-body-16);
+    font-size: var(--font-size-body-14);
     line-height: var(--line-height-body-14);
     font-weight: var(--font-weight-regular);
   }

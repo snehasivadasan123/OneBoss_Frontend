@@ -19,7 +19,6 @@ type KeyRecord = {
 
 function formatNow() {
   const now = new Date()
-  // Format like 03/21/2023 and 16:02 to match screenshots
   const date = now
     .toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" })
     .replace(/\//g, "/")
@@ -31,7 +30,7 @@ function genKey(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID()
   }
-  // Fallback simple generator
+
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0
     const v = c === "x" ? r : (r & 0x3) | 0x8
@@ -40,7 +39,6 @@ function genKey(): string {
 }
 
 export function Householding() {
-  // Static sample expired keys (from original file)
   const expiredRows: KeyRecord[] = useMemo(
     () => [
       { id: "expired-1", date: "03/21/2023", time: "16:02", status: "expired", recipient: "-" },
@@ -56,11 +54,6 @@ export function Householding() {
   const [acceptOpen, setAcceptOpen] = useState(false)
 
   const selfKeyIds = inProgressKeys.map((key) => key.id)
-
-  // const form = useForm<{ key: string }>({
-  //   defaultValues: { key: "" },
-  //   mode: "onSubmit",
-  // })
 
   const onGenerate = useCallback(() => {
     const { date, time } = formatNow()
@@ -80,7 +73,7 @@ export function Householding() {
     setInProgressKeys((prev) => prev.filter((k) => k.id !== id))
   }, [])
 
-  // Show one-by-one panel for the most recently generated key
+
   const latestKey = inProgressKeys.length ? inProgressKeys[inProgressKeys.length - 1] : null
 
   return (
@@ -119,20 +112,12 @@ export function Householding() {
         {latestKey && (
           <div className="mx-2 md:mx-4 mt-3 mb-2 rounded-md bg-blue-50 border border-blue-100">
             <div className="px-3 md:px-4 py-3">
-              <h3 className="body-14-medium text-primary-1000">New Householding Key</h3>
-              <p className="text-xs text-muted-foreground mt-1">
+              <h3 className="subheading-16-semibold ">New Householding Key</h3>
+              <p className="body-14-medium text-primary-600">
                 This key will grant read only access to your account. Only one key per recipient is allowed.
               </p>
               <div className="mt-3 flex items-center justify-between gap-3">
-                <code className="font-mono text-xs text-primary-1000 break-all">{latestKey.id}</code>
-                {/* <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-primary-1000 border border-primary-1000 bg-transparent"
-                  onClick={() => onCancel(latestKey.id)}
-                >
-                  Cancel
-                </Button> */}
+                <code className="body-14-bold">{latestKey.id}</code>
               </div>
             </div>
           </div>
